@@ -1,4 +1,5 @@
 <?php
+namespace SilexHackerNews;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -6,9 +7,18 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+use Controllers\ClientController;
+use Controllers\iClient;
+use GuzzleHttp\Client as HttpClient;
+
+$appClient = new ClientController(new HttpClient());
+$app['client'] = $appClient;
+
+
 //Request::setTrustedProxies(array('127.0.0.1'));
 
 $app->get('/', function () use ($app) {
+    dump($app['client']->getTopStories());
     return $app['twig']->render('index.html.twig', array());
 })
 ->bind('homepage')
