@@ -3,11 +3,12 @@
 namespace Controllers;
 
 use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Promise;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Controllers\iClient;
+use Repositories\ItemRepository;
 
 
 class ClientController implements iClient {
@@ -142,14 +143,93 @@ class ClientController implements iClient {
     /**
      * @inheritDoc
      */
-    function getJobStories(): array {
+    function getJobStories($start, $stop): array {
         return array();
     }
     
     /**
      * @inheritDoc
      */
-    function getUpdates(): ?Updates {
+    function getUpdates($start, $stop): ?Updates {
+        return null;
+    }
+
+    /**
+     * @param string
+     * @return null|array
+     */
+    private function getItems($call_url) {
+        
+        $response = $this->http_client->get($call_url);
+
+        if($response->getStatusCode() !== 200) {
+            throw new NotFoundHttpException(
+                sprintf('Requested endpoint: %s returned a status code: %u', $call_url, $response->getStatusCode())
+            );
+        }
+        return json_decode($response->getBody()->getContents());
+    }
+
+
+    /**
+     * Asynchronously get json items
+     * @param  $items int[] 
+     * @return array[] 
+     */
+    private function getAsync($items)
+    {
+        $responses = array();
+        $results = array();
+        
+        $promises = $this->buildPromises($items);
+
+        
+        // Wait on all of the requests to complete. Throws a ConnectException
+        // if any of the requests fail
+        $promised_responses = Promise\unwrap($promises);
+        // Wait for the requests to complete, even if some of them fail
+        $promised_responses = Promise\settle($promises)->wait();
+
+        $responses = array_merge($responses, $promised_responses);
+
+        
+        
+        foreach($responses as $single_response)
+        {
+            if($single_response['value']->getStatusCode() === 200) 
+                $possible_item = $single_response['value']->getBody()->getContents();
+                $results [] = $this->formatItem($possible_item);
+        }
+        
+        return $results;
+    }
+
+    /**
+     * function to format story item properly
+     * @param $jsonObj json
+     * @return array
+     */
+    private function formatItem($item) {
+        //obj = ItemRepository::fromArray($item);
+        return json_decode($item, true);
+    }
+
+
+    /**
+     * @param $slice array
+     * @return null|array
+     */
+
+    private function buildPromises($slice) {
+        if(!empty($slice)) {
+            $promises = [];
+            foreach($slice as $item_id) {
+                $item_url = $this->buildUrl('getItem', $item_id);
+                array_push($promises,$this->http_client->getAsync($item_url));
+            }
+            return $promises;
+        }
+
         return null;
     }
 
