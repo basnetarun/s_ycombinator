@@ -49,7 +49,7 @@ class ClientController implements iClient {
         if(method_exists($this, $url_func)) {
             $url = $this->base_url.$this->endpoints[$url_func].'.json';
             if($id!==null) {
-                $url = str_replace('{id}', $id);
+                $url = str_replace('{id}', $id, $url);
             }
             return $url;
         } else {
