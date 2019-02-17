@@ -18,11 +18,24 @@ $app['client'] = $appClient;
 //Request::setTrustedProxies(array('127.0.0.1'));
 
 $app->get('/', function () use ($app) {
-    dump($app['client']->getTopStories());
-    return $app['twig']->render('index.html.twig', array());
+    
+    return $app['twig']->render('index.html.twig');
 })
 ->bind('homepage')
 ;
+
+$app->get('/topstories/{start}/{stop}', function ($start, $stop) use ($app) {
+
+    if (! preg_match('/^\d+$/',$start) || ! preg_match('/^\d+$/', $stop)) {
+        $app->abort(404, "One of given parameters is not a number");
+    }
+    if($stop>$start)  {
+        $news = $app['client']->getTopStories($start,$stop);
+        return $app->json($news);
+    } else {
+        $app->abort(404, "Variable start must be smaller than stop");
+    }
+});
 
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($app['debug']) {
