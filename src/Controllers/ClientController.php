@@ -99,44 +99,42 @@ class ClientController implements iClient {
     /**
      * @inheritDoc
      */
-    function getNewStories(): array {
+    function getNewStories($start, $stop): array {
         return array();
     }
 
     /**
      * @inheritDoc
      */
-    function getTopStories(): array {
+    function getTopStories($start, $stop): array {
         $call_url = $this->buildUrl('getTopStories');
-        $response = $this->http_client->get($call_url);
+        $id_topstories = $this->getItems($call_url);
+        
+        $topstories = array_slice($id_topstories,$start,$stop);
 
-        if($response->getStatusCode() !== 200) {
-            throw new NotFoundHttpException(
-                sprintf('Requested endpoint: %s returned a status code: %u', $call_url, $response->getStatusCode())
-            );
-        }
-        return json_decode($response->getBody()->getContents());
+        return $this->getAsync($topstories);
+        
     }
 
 
     /**
      * @inheritDoc
      */
-    function getBestStories(): array {
+    function getBestStories($start, $stop): array {
         return array();
     }
     
     /**
      * @inheritDoc
      */
-    function getAskStories(): array {
+    function getAskStories($start, $stop): array {
         return array();
     }
     
     /**
      * @inheritDoc
      */
-    function getShowStories(): array {
+    function getShowStories($start, $stop): array {
         return array();
     }
     
