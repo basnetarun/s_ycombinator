@@ -7,8 +7,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+
 use Controllers\ClientController;
-use Controllers\iClient;
 use GuzzleHttp\Client as HttpClient;
 
 $appClient = new ClientController(new HttpClient());
