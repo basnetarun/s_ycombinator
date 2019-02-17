@@ -1,15 +1,17 @@
 <?php 
 
-namespace SilexHackerNews\Respositories;
+namespace Repositories;
 
+use Utilities\ItemFromArray as ItemFromArray;
 
 /**
  * Model Class for Item Entity
  */
 
 
-class Item {
+class ItemRepository {
 
+    use ItemFromArray;
     /**
      * @var int
      */
@@ -200,7 +202,7 @@ class Item {
     {
         return $this->parts;
     }
-    
+
     /**
      * @return int|null
      */
