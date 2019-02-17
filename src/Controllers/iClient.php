@@ -29,39 +29,53 @@ interface iClient {
     function getUser(string $name): ?User;
 
     /**
+     * @param int $start
+     * @param int $stop
      * @return array
      */
-    function getNewStories(): array;
+    function getNewStories($start, $stop): array;
 
     /**
+     * @param int $start
+     * @param int $stop
      * @return array
      */
-    function getTopStories(): array;
+    function getTopStories($start, $stop): array;
 
 
     /**
+     * @param int $start
+     * @param int $stop
      * @return array
      */
-    function getBestStories(): array;
+    function getBestStories($start, $stop): array;
     
     /**
+     * @param int $start
+     * @param int $stop
      * @return array
      */
-    function getAskStories(): array;
+    function getAskStories($start, $stop): array;
     
     /**
+     * @param int $start
+     * @param int $stop
      * @return array
      */
-    function getShowStories(): array;
+    function getShowStories($start, $stop): array;
     
     
     /**
+     * @param int $start
+     * @param int $stop
      * @return array
      */
-    function getJobStories(): array;
+    function getJobStories($start, $stop): array;
     
     /**
+     * @param int $start
+     * @param int $stop
      * @return Updates|null
      */
-    function getUpdates(): ?Updates;
+    function getUpdates($start, $stop): ?Updates;
 }
