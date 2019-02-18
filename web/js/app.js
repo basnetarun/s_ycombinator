@@ -57,6 +57,7 @@ function utcToTimeAgo(ts) {
     }
 }
 $(document).ready(function() {
+if($("body").hasClass("news")) {
     var total;
     $.ajax({ 
         url: '/topstories/0/25',
