@@ -102,4 +102,7 @@ if($("body").hasClass("news")) {
         });
 
     });
+}
+/** end news */
+
 });
