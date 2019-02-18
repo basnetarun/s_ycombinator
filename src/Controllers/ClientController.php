@@ -85,8 +85,9 @@ class ClientController implements iClient {
     /**
      * @inheritDoc
      */
-    function getItem(int $id): ?Item {
-        return null;
+    function getItem(int $id): ?array {
+        $call_url = $this->buildUrl('getItem', $id);
+        return $this->getItems($call_url);
     }
 
     /**
@@ -116,7 +117,6 @@ class ClientController implements iClient {
         return $this->getAsync($topstories);
         
     }
-
 
     /**
      * @inheritDoc
@@ -158,7 +158,7 @@ class ClientController implements iClient {
      * @param string
      * @return null|array
      */
-    private function getItems($call_url) {
+    private function getItems($call_url): ?array{
         
         $response = $this->http_client->get($call_url);
 
@@ -167,7 +167,7 @@ class ClientController implements iClient {
                 sprintf('Requested endpoint: %s returned a status code: %u', $call_url, $response->getStatusCode())
             );
         }
-        return json_decode($response->getBody()->getContents());
+        return json_decode($response->getBody()->getContents(), true);
     }
 
 

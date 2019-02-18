@@ -18,9 +18,9 @@ interface iClient {
 
     /**
      * @param int $id
-     * @return Item|null
+     * @return array|null
      */
-    function getItem(int $id): ?Item;
+    function getItem(int $id): ?array;
 
     /**
      * @param string $name
