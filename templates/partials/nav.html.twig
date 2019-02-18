@@ -7,19 +7,19 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!-- start plotting navigation items -->
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item px-4 active">
+            <li class="nav-item px-4 {% if navactive == 'stories'%}active{% endif %}">
                 <a href="#" class="nav-link">stories</a>
             </li>
-            <li class="nav-item px-4">
+            <li class="nav-item px-4 {% if navactive == 'comments'%}active{% endif %}">
                 <a href="#" class="nav-link">comments</a>
             </li>
-            <li class="nav-item px-4">
+            <li class="nav-item px-4 {% if navactive == 'ask'%}active{% endif %}">
                 <a href="#" class="nav-link">ask</a>
             </li>
-            <li class="nav-item px-4">
+            <li class="nav-item px-4 {% if navactive == 'show'%}active{% endif %}">
                 <a href="#" class="nav-link">show</a>
             </li>
-            <li class="nav-item px-4">
+            <li class="nav-item px-4 {% if navactive == 'jobs'%}active{% endif %}">
                 <a href="#" class="nav-link">jobs</a>
             </li>
         </ul>
