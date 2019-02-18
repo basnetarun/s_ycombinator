@@ -7,15 +7,15 @@ $(document).on({
 
 function createNewsList(key, news) {
     var template = [
-    "<li id='key_",key,"' class='lead list-group-item shadow-sm p-3 mb-5 bg-white rounded'>",
+    "<li id='key_",key,"' class='lead list-group-item shadow-sm p-2 mb-3 bg-white rounded'>",
     "<p ><a href='",news.url,"' target='_blank' class='text-dark'><span>",news.title || '',"</span> <i class='fas fa-external-link-alt ml-2'></i></a></p>",
     "<div class='d-flex justify-content-md-center flex-wrap'>",
         "<div class='p-2'><button type='button' class='btn btn-light-outline'>",
         "<i class='far fa-user'></i>",
         "<span class='badge badge-light'>",news.by || '',"</span></button></div>",
-        "<div class='p-2'><button type='button' class='btn btn-light-outline'>",
+        "<div class='p-2'><a role='button' class='btn btn-light-outline' href='/discussion/",news.id,"'>",
         "<i class='far fa-comments'></i>",
-        "<span class='badge badge-light'>",news.descendants || 0,"</span></button></div>",
+        "<span class='badge badge-light'>",news.descendants || 0,"</span></a></div>",
         "<div class='p-2'><button type='button' class='btn btn-light-outline'>",
         "<i class='far fa-thumbs-up'></i>",
         "<span class='badge badge-light'>",news.score || 0,"</span></button></div>",
