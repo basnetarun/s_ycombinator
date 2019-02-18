@@ -19,7 +19,10 @@ $app['client'] = $appClient;
 
 $app->get('/', function () use ($app) {
     
-    return $app['twig']->render('index.html.twig');
+    return $app['twig']->render('index.html.twig', array(
+        'bodyclass' => 'news',
+        'navactive' => ''
+    ));
 })
 ->bind('homepage')
 ;
